@@ -76,7 +76,11 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             fila[2]=cliente.getDireccion();
             fila[3]=cliente.getTelefono();
             fila[4]=cliente.getCupoDeCredito();
-            fila[5]=cliente.getSaldo();
+            if(cliente.getSaldo() !=null){
+                fila[5]=cliente.getSaldo();
+            }else{
+                fila[5]="0.00";
+            }
             fila[6]=cliente.getListaDePrecios();
             miTabla.addRow(fila);
         }
@@ -162,9 +166,8 @@ public class AbmClientes extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -197,8 +200,14 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         cliente.setTelefono(String.valueOf(this.jTable1.getValueAt(posicion,3)));
         cliente.setCupoDeCredito(Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(posicion,4))));
         Double sal=Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(posicion,5)));
-        Double saldoOriginal=cliente.getSaldo();
-        Double ajuste=sal - saldoOriginal;
+        Double saldoOriginal=0.00;
+        Double ajuste=0.00;
+        if(sal != cliente.getSaldo()){
+            if(cliente.getSaldo() !=null){
+                saldoOriginal=cliente.getSaldo();
+            }
+                ajuste=sal - saldoOriginal;
+        }
         if(ajuste == 0){
             
         }else{

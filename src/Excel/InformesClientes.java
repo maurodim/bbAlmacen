@@ -131,7 +131,11 @@ public class InformesClientes {
             celda5=fila.createCell(5);
             //celda5.setCellFormula(rs.getString("observaciones"));
             celda5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda5.setCellValue(cliente.getSaldo());
+            if(cliente.getSaldo()!=null){
+                celda5.setCellValue(cliente.getSaldo());
+            }else{
+                celda5.setCellValue(0.00);
+            }
             //celda5.setCellValue(rs.getDate("fecha"));
             
         }
@@ -139,7 +143,7 @@ public class InformesClientes {
            * segunda hoja
            */  
            Busquedas bus=new ClientesTango();
-            sql="select numeroProveedor,fecha,monto,numeroComprobante,idUsuario,idCaja,tipoComprobante,idSucursal,(select listcli.razon_soci from listcli where listcli.codmmd=numeroProveedor)as nombreP from movimientosclientes where numeroProveedor > 1 and fecha between '"+desde+"' and '"+hasta+"' group by numeroComprobante order by numeroProveedor,fecha";
+            sql="select numeroProveedor,fecha,monto,numeroComprobante,idUsuario,idCaja,(select tipomovimientos.descripcion from tipomovimientos where tipomovimientos.ID=movimientosclientes.tipoComprobante)as tipocomprobante1,idSucursal,(select listcli.razon_soci from listcli where listcli.codmmd=numeroProveedor)as nombreP from movimientosclientes where numeroProveedor > 1 and fecha between '"+desde+"' and '"+hasta+"' group by numeroComprobante,tipoComprobante order by numeroProveedor,fecha";
             System.out.println(sql);
         //fuente.setFontHeight((short)21);
         fuente.setFontName(fuente.FONT_ARIAL);
@@ -209,11 +213,11 @@ public class InformesClientes {
             celda4.setCellValue(rs.getInt("idCaja"));
             celda5=fila.createCell(5);
             celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
-            if(rs.getInt("tipoComprobante")==11){
-                celda5.setCellValue("Recibo de Pago");
-            }else{
-                celda5.setCellValue("Venta");
-            }
+            //if(rs.getInt("tipoComprobante")==11){
+                //celda5.setCellValue("Recibo de Pago");
+            //}else{
+                celda5.setCellValue(rs.getString("tipocomprobante1"));
+            //}
         } 
          
             

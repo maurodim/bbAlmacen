@@ -45,8 +45,9 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         Inicio.caja=(Cajas) caj.ArquearCaja(Inicio.caja);
         
         initComponents();
-        this.jLabel5.setText("Saldo Inicial de Caja:"+Inicio.caja.getSaldoInicial());
-        this.jLabel6.setText("Total Ventas: "+totalVentas);
+        ModificarLabels();
+        //this.jLabel5.setText("Saldo Inicial de Caja:"+Inicio.caja.getSaldoInicial());
+        //this.jLabel6.setText("Total Ventas: "+totalVentas);
         
     }
     private void AgregarRenglonTabla(){
@@ -135,7 +136,9 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             fila[0]=cajj.getNumeroDeComprobante();
             fila[1]=cajj.getDescripcionMovimiento();
             if(cajj.getTipoMovimiento()==1 || cajj.getTipoMovimiento()==7 || cajj.getTipoMovimiento()==13){
-                totalVentas=totalVentas + cajj.getMontoMovimiento();
+                if(cajj.getPagado()==1){
+                    totalVentas=totalVentas + cajj.getMontoMovimiento();
+                }
             }else{
                 if(cajj.getTipoMovimiento()==9){
 
@@ -288,7 +291,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jLabel5.setText("Saldo Inicial de Caja:");
@@ -429,7 +432,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
             Double montot=Double.parseDouble(this.jTextField1.getText());
             montot=montot * -1;
             fact.setMontoFinal(montot);
-               ade.PagarComprobante(fact);
+               ade.PagarComprobante(fact,operacionSelect);
                listadoP.clear();
                operacionSelect=0;
                this.jPanel2.setVisible(false);
@@ -443,7 +446,7 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                comprobantes.setCliente(cliente);
                comprobantes.setMontoTotal(Double.parseDouble(this.jTextField1.getText()));
                comprobantes.setFechaEmision(Date.valueOf(Inicio.fechaDia));
-               adeu.PagarComprobante(comprobantes);
+               adeu.PagarComprobante(comprobantes,operacionSelect);
                             listadoP.clear();
                operacionSelect=0;
                this.jPanel2.setVisible(false);

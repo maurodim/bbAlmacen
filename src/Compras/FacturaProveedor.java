@@ -355,7 +355,7 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
     }
 
     @Override
-    public Object PagarComprobante(Object objeto) {
+    public Object PagarComprobante(Object objeto,Integer idOp) {
        FacturaProveedor factProv=(FacturaProveedor)objeto;
        numeroActualRecibo();
        numeroRecibo++;

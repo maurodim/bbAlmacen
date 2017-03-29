@@ -288,7 +288,7 @@ public class SeleccionDeClientes extends javax.swing.JInternalFrame {
             IngresoNtaCred.jTextField1.requestFocus();
         }catch(java.lang.NullPointerException ex){
             IngresoDePedidos.cliT=cliT;
-            IngresoDePedidos.jLabel6.setText(cliT.getRazonSocial());
+            IngresoDePedidos.jLabel10.setText(cliT.getRazonSocial());
             IngresoDePedidos.jTextField1.requestFocus();
         }
         

@@ -58,6 +58,16 @@ public class Cajas extends Sucursales implements Cajeables{
     private static Integer numeroDeComprobanteBk=0;
     private static ArrayList listadoDeComprobantes=new ArrayList();
     private Integer idMovimiento;
+    private Integer pagado;
+
+    public Integer getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(Integer pagado) {
+        this.pagado = pagado;
+    }
+    
 
     public Integer getIdMovimiento() {
         return idMovimiento;
@@ -724,6 +734,7 @@ public class Cajas extends Sucursales implements Cajeables{
                 saldoFinal= saldoFinal + rs.getDouble("monto");
                 cajass.setTipoDeComprobante(rs.getInt("tipoComprobante"));
                 cajass.setIdMovimiento(rs.getInt("id"));
+                cajass.setPagado(rs.getInt("pagado"));
                 int pos=cajass.getTipoMovimiento() -1;
                 Operaciones operacion=(Operaciones)listOperaciones.get(pos);
                  String desc=operacion.getDescripcion();
@@ -815,7 +826,7 @@ public class Cajas extends Sucursales implements Cajeables{
             tra=new Conecciones();
         
         */
-         sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,observaciones) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+caj.getNumeroDeComprobante()+","+caj.getTipoDeComprobante()+","+monto+","+caj.getTipoMovimiento()+","+caj.getNumero()+",0,2,0,'"+caj.getDescripcionMovimiento()+"')";
+         sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado,observaciones) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+caj.getNumeroDeComprobante()+","+caj.getTipoDeComprobante()+","+monto+","+caj.getTipoMovimiento()+","+caj.getNumero()+",0,2,1,'"+caj.getDescripcionMovimiento()+"')";
     /*    
     }else{
     */ 
