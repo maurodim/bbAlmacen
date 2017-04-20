@@ -4,10 +4,12 @@
  */
 package facturacion.pantallas;
 
+import Clientes.Pantallas.NuevoCliente;
+import Clientes.Pantallas.SeleccionDeClientes;
 import Conversores.Numeros;
 import Fiscal.EpsonTicket;
 import Impresiones.Impresora;
-import facturacion.clientes.ClientesTango;
+import Clientes.Objetos.ClientesTango;
 
 import interfaceGraficas.Inicio;
 import interfaces.Modificable;
@@ -975,7 +977,7 @@ private void agregarRenglonTabla(){
             //Double valor=(pedidos.getCantidad() * precioUnitario);
             //valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
-            String val=String.valueOf(valor);
+            String val=Numeros.ConvetirDoubleAString(valor);
             montoTotal=montoTotal + valor;
             fila[3]=val;
             busC.addRow(fila);
@@ -998,7 +1000,7 @@ private void montrarMonto(){
     Double total=montoTotal;
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel2.setText(String.valueOf(total));
+    this.jLabel2.setText(Numeros.ConvetirDoubleAString(total));
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

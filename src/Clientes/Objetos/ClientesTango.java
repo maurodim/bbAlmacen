@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package facturacion.clientes;
+package Clientes.Objetos;
 
 
 import Conversores.Numeros;
@@ -631,7 +631,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         ClientesTango cli=(ClientesTango)cliente;
         Boolean resultado=false;
         Transaccionable tra=new Conecciones();
-        String sql="insert into listcli (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,COEFICIENTE,empresa,CUPODECREDITO) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"','"+cli.getCondicionIva()+"','"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+")";
+        String sql="insert into listcli (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,COEFICIENTE,empresa,CUPODECREDITO) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"','"+cli.getCondicionIva()+"','"+cli.getNumeroDeCuit()+"',"+cli.getCondicionDeVenta()+","+cli.getListaDePrecios()+","+cli.getCoeficienteListaDeprecios()+",'"+cli.getEmpresa()+"',"+cli.getCupoDeCredito()+")";
         System.out.println(sql);
         resultado=tra.guardarRegistro(sql);
         sql="select last_insert_id()";
@@ -785,7 +785,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
        String fech=Numeros.ConvertirFecha(Inicio.fechaVal);
        Transaccionable tra=new Conecciones();
        Double montt=factProv.getMontoTotal() * -1;
-       String sql="insert into movimientosclientes (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito) values ("+factProv.getCliente().getCodigoId()+","+montt+","+numeroRecibo+","+factProv.getUsuarioGenerador()+",11,"+factProv.getIdSucursal()+",0)";
+       String sql="insert into movimientosclientes (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,idSucursal,idRemito,pagado) values ("+factProv.getCliente().getCodigoId()+","+montt+","+numeroRecibo+","+factProv.getUsuarioGenerador()+",11,"+factProv.getIdSucursal()+",0,0)";
        //String sql="update movimientosproveedores set pagado=1,numeroComprobante="+numeroRecibo+",idCaja="+Inicio.caja.getNumero()+",fechaPago='"+fech+"',idSucursal="+Inicio.sucursal.getNumero()+" where id="+factProv.getId();
        //System.out.println("VEAMOS "+sql);
        tra.guardarRegistro(sql);

@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package facturacion.pantallas;
+package Clientes.Pantallas;
 
 import Conversores.Numeros;
-import facturacion.clientes.ClientesTango;
-import facturacion.clientes.ListasDePrecios;
+import Clientes.Objetos.ClientesTango;
+import Clientes.Objetos.ListasDePrecios;
+import facturacion.pantallas.IngresoDePedidos;
 import interfaces.Personalizable;
 import interfacesPrograma.Facturar;
 import java.util.ArrayList;
@@ -182,7 +183,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        String condicion="1";
        Double limite=Numeros.ConvertirStringADouble(this.jTextField5.getText());
        cli.setCupoDeCredito(limite);
-       
+       if(limite > 0){
+           cli.setCondicionDeVenta(2);
+       }else{
+           cli.setCondicionDeVenta(1);
+       }
            cli.setEmpresa("bu");
        
        ListasDePrecios lista=new ListasDePrecios();
@@ -190,11 +195,13 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        if(posLista < 0)posLista=0;
        lista=(ListasDePrecios)listadoL.get(posLista);
        cli.setListaDePrecios(lista.getNumeroLista());
+       /*
        if(cli.getCupoDeCredito() > 0.00){
            cli.setCondicionDeVenta(2);
        }else{
         cli.setCondicionDeVenta(1);
        }
+               */
        cli.setCoeficienteListaDeprecios(lista.getPorcentaje());
        cli.setCondicionIva(condicion);
        cli.setNumeroDeCuit(this.jTextField3.getText());
