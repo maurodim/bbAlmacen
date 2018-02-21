@@ -702,7 +702,7 @@ public class Articulos implements Facturar,Editables,Modificable{
         ArrayList resultado=new ArrayList();
         Articulos articulo=null;
         criterio=criterio.toUpperCase();
-        String sql="select *,(select sum(cantidad) FROM movimientosarticulos where movimientosarticulos.idArticulo=articulos.ID group by idArticulo,numeroDeposito limit 0,1)as sstock from articulos where nombre like '%"+criterio+"%'";
+        String sql="select * from articulos left join (select sum(movimientosarticulos.cantidad)as sstock,movimientosarticulos.idArticulo FROM movimientosarticulos group by idArticulo,numeroDeposito limit 0,1) movimientosarticulos on articulos.ID=movimientosarticulos.idArticulo where articulos.nombre like '%"+criterio+"%'";
         
         //Transaccionable tra=new ConeccionLocal();
         rr=tra.leerConjuntoDeRegistros(sql);
