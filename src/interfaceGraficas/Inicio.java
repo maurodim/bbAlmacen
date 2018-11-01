@@ -21,6 +21,7 @@ import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
 import Clientes.Objetos.ClientesTango;
+import Precios.AbmPreciosMasivos;
 import facturacion.pantallas.IngresoDePedidos;
 import facturacion.pantallas.IngresoNtaCred;
 import interfacesPrograma.Cajeables;
@@ -203,6 +204,8 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISITEMA DE GESTION BAMBU SOFTWARE");
@@ -473,6 +476,23 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu8);
 
+        jMenu9.setText("Actualizador de Precios");
+        jMenu9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu9ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem26.setText("Actualizar Precios Masivos");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem26);
+
+        jMenuBar1.add(jMenu9);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -735,6 +755,18 @@ public class Inicio extends javax.swing.JFrame {
         //System.out.println(bb.GenerarArchivos());
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenu9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu9ActionPerformed
+        
+    }//GEN-LAST:event_jMenu9ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        AbmPreciosMasivos abm=new AbmPreciosMasivos();
+        jDesktopPane1.add(abm);
+        abm.setVisible(true);
+        abm.pack();
+        abm.toFront();
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -800,6 +832,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -819,6 +852,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

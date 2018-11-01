@@ -5,7 +5,6 @@
 package objetos;
 
 import Conversores.Numeros;
-import com.mysql.jdbc.CommunicationsException;
 import interfaceGraficas.Inicio;
 import interfaces.Editables;
 import interfaces.Modificable;
@@ -15,13 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -62,6 +58,34 @@ public class Articulos implements Facturar,Editables,Modificable{
     private Integer idDeposito;
     private static Transaccionable tra=new ConeccionLocal();
     private static ResultSet rr;
+    private Double porcientoCosto;
+    private Double porcientoVenta;
+    private Double pocientoMayortista;
+
+    public Double getPorcientoCosto() {
+        return porcientoCosto;
+    }
+
+    public void setPorcientoCosto(Double porcientoCosto) {
+        this.porcientoCosto = porcientoCosto;
+    }
+
+    public Double getPorcientoVenta() {
+        return porcientoVenta;
+    }
+
+    public void setPorcientoVenta(Double porcientoVenta) {
+        this.porcientoVenta = porcientoVenta;
+    }
+
+    public Double getPocientoMayortista() {
+        return pocientoMayortista;
+    }
+
+    public void setPocientoMayortista(Double pocientoMayortista) {
+        this.pocientoMayortista = pocientoMayortista;
+    }
+    
 
     public Integer getIdDeposito() {
         return idDeposito;
@@ -666,6 +690,32 @@ public class Articulos implements Facturar,Editables,Modificable{
         }
         return listadoA;
     }
+    private String ActualizarPorPorcentaje(ArrayList lst){
+        Iterator it=lst.listIterator();
+        Articulos articulo;
+        int cantidad=0;
+        String msj;
+        Transaccionable tra=new Conecciones();
+        String sql="";
+        int cc=0;
+        int vv=0;
+        String campos="";
+        while(it.hasNext()){
+            articulo=(Articulos) it.next();
+            campos="";
+            if(articulo.getPorcientoVenta() != null)campos=" precio=round(precio * "+articulo.getPorcientoVenta()+",2)";
+            if(articulo.getPorcientoCosto() != null)campos+=" ,costo=round(costo * "+articulo.getPorcientoCosto()+",2)";
+            if(articulo.getPocientoMayortista() != null)campos+=" ,servicio=round(servicio * "+articulo.getPocientoMayortista()+",2)";
+            
+                sql="update articulos set"+campos+" where id="+articulo.getNumeroId();
+                tra.guardarRegistro(sql);
+                System.out.println(sql);
+                cantidad++;
+        }
+        msj="<html>Se modificaron <strong>"+cantidad+"</strong> de Registros.Gracias</html>";
+        
+        return msj;
+    }
     @Override
     public Boolean guardar(Object oob) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -783,7 +833,7 @@ public class Articulos implements Facturar,Editables,Modificable{
     @Override
     public ArrayList listarClientes(String nombre) {
          ArrayList listado=new ArrayList();
-        String sql="select id,nombre,barras,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo from articulos where BARRAS like '"+nombre+"' and INHABILITADO=0";
+        String sql="select id,nombre,barras,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo from articulos where BARRAS like '"+nombre+"'";
         Transaccionable tra=new ConeccionLocal();
         ResultSet rr=tra.leerConjuntoDeRegistros(sql);
         Articulos articulo=new Articulos();
@@ -917,11 +967,11 @@ public class Articulos implements Facturar,Editables,Modificable{
     public Boolean EliminacionDeObjeto(Object objeto) {
         Articulos articulo=(Articulos)objeto;
         Boolean verif=false;
-        String sql="update articulos set INHABILITADO=1, actualizacion=4 where ID="+articulo.getNumeroId();
+        String sql="delete from articulos where ID="+articulo.getNumeroId();
         Transaccionable tra=new Conecciones();
         verif=tra.guardarRegistro(sql);
-        sql="insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,4),(2,1,4),(3,1,4),(4,1,4),(5,1,4),(6,1,4),(7,1,4)";
-        tra.guardarRegistro(sql);
+        //sql="insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,4),(2,1,4),(3,1,4),(4,1,4),(5,1,4),(6,1,4),(7,1,4)";
+        //tra.guardarRegistro(sql);
         
         return verif;
     }
@@ -1163,6 +1213,11 @@ public class Articulos implements Facturar,Editables,Modificable{
         }
         
         return articulo;
+    }
+
+    @Override
+    public String actualizarMasivo(ArrayList listado) {
+        return this.ActualizarPorPorcentaje(listado);
     }
     
     

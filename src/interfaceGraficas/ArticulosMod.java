@@ -9,6 +9,7 @@ import interfaces.Editables;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import objetos.Articulos;
 import tablas.MiModeloTablaArticulos;
@@ -463,7 +464,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Editables editable=new Articulos();
-        if(editable.EliminacionDeObjeto(arti))this.dispose();
+        if(JOptionPane.showConfirmDialog(rootPane, "Confirma que Elimina el Articulo "+arti.getDescripcionArticulo()+"??")==1){
+            
+        }else{
+            if(editable.EliminacionDeObjeto(arti))this.dispose();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
